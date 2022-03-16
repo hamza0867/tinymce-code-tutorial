@@ -1,4 +1,4 @@
-import { Optional } from '@ephox/katamari';
+import {Optional} from '@ephox/katamari';
 
 /*
 Optional
@@ -34,14 +34,20 @@ const parseIntOpt = (s: string): Optional<number> => {
 export const toPositiveInteger = (n: number): Optional<number> =>
   n > 0 ? Optional.some(n) : Optional.none();
 
+
 // TODO: create a function which takes a string and returns some if the string is non-empty
+export const toNotEmptyString = (s: string): Optional<string> =>
+  s.length > 0 ? Optional.some(s) : Optional.none();
 
 // TODO: create a function which takes a url as a string and returns the protocol part as an Optional.
 // The string may or may not actually have a protocol. For the protocol to be valid, it needs to be all alpha characters.
 // You can use a regex.
 // Have a look at Exercise3OptionTest.ts for example input. Make sure the tests pass.
 export const getProtocol = (url: string): Optional<string> => {
-  throw new Error("TODO");
+  const split = url.split(":");
+  if (split.length < 2) return Optional.none();
+  const protocol = split[0];
+  return /^[a-z]+$/i.test(protocol) ? Optional.some(protocol) : Optional.none()
 };
 
 /*
@@ -57,10 +63,13 @@ TODO: use Optional.from to implement the following DOM function
  */
 
 export const getNextSibling = (e: Element): Optional<ChildNode> => {
-  throw new Error("TODO");
+  return Optional.from(e.nextSibling)
 };
 
 // TODO: use Optional.from to implement a similar wrapper for Element.getAttributeNode(string)
+export const getAttributeNode = (e: Element, attribute: string): Optional<Attr> => {
+  return Optional.from(e.getAttributeNode(attribute))
+};
 
 /*
 How do we get data out of an Optional? Well, that's a bit tricky since there isn't always
@@ -80,10 +89,12 @@ export const message = (e: Optional<string>): string =>
   );
 
 // TODO: Implement a function using fold, that takes an Optional<number>. If it's some, double it. If it's none, return 0;
+const doubleOptionalNumber = (num: Optional<number>): number =>
+  num.fold(() => 0, x => x * 2)
 
 // TODO: Implement a function that takes an Optional<T> for any type T. Return true if it's some, and false if it's none.
-const trueIfSome = <T> (x: Optional<T>): boolean  => {
-  throw new Error("TODO");
+const trueIfSome = <T>(x: Optional<T>): boolean => {
+  return x.fold(() => false, () => true)
 };
 
 /*
@@ -107,8 +118,12 @@ You can do this with fold, but getOr is a shortcut.
 */
 
 // TODO: Using getOr, take an Optional<{age: number}> and turn it into an {age: number}, using a default value of 0.
+const withDefaultAge = (x: Optional<{age: number}>): {age: number} =>
+  x.getOr({age: 0})
 
 // TODO: Write the same function using fold
+const withDefaultAge2 = (x: Optional<{age: number}>): {age: number} =>
+  x.fold(() => ({age: 0}), t => t)
 
 
 /*
@@ -118,10 +133,12 @@ Let's explore this by converting Optionals to and from Arrays.
  */
 
 // TODO: Write a function that converts an Optional<A> to an A[] for any type A.
+const OptionalToArray = <T>(x: Optional<T>): T[] =>
+  x.fold(() => [], x => [x])
 
 // TODO: Write a function that converts an A[] to an Optional<A>. If the array has more than one element, only consider the first element.
-
-
+const ArrayToOptional = <T>(arr: T[]): Optional<T> =>
+  arr.length > 0 ? Optional.some(arr[0]) : Optional.none()
 /*
 One of the most useful functions on Optional is "map". We say this function "maps a function over the Optional".
 
@@ -139,12 +156,16 @@ const x: Optional<string> = Optional.some(3).map((x) => String(x)); // returns O
 const y: Optional<string> = Optional.none<number>().map((x) => String(x)); // returns Optional.none<string>()
 
 // TODO: Write a function that takes an Optional<number> and adds 3 to the number
+const add3 = (x: Optional<number>): Optional<number> =>
+  x.map(i => i + 3)
 
 // TODO: Write a function that takes an Optional<string> and prefixes the string with "hello"
+const prefixeWithHello = (s: Optional<string>): Optional<string> =>
+  s.map(x => `hello ${x}`)
 
 /*
 TODO: If the below function is called, does it return a value or throw an exception? Why should it behave one way or the other?
-Answer: ...
+Answer: it should return none, the function passed to map should execute lazily (i.e only if the optional is some)
  */
 const willItKersplode = (): Optional<string> => {
   const z = Optional.none<string>();

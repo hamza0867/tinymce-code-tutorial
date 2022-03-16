@@ -14,8 +14,15 @@ Let's model the x,y of the top-left and bottom-right corners.
 
 *Remember* we like immutable data, so mark the fields readonly.
 */
+
+export interface Point {
+  readonly x: number;
+  readonly y: number;
+}
+
 export interface Boundz {
-  // TODO: add fields: x1, y1, x2, y2
+  readonly topLeft: Point;
+  readonly bottomRight: Point;
 }
 
 /*
@@ -28,9 +35,11 @@ Notice also that we have an explicit return type. This lets the compiler check t
 code matches the type signature.
 */
 export const width = (b: Boundz): number =>
-  /* TODO */ -1;
+  b.bottomRight.x - b.topLeft.x
 
 // TODO implement height function
+export const height = (b: Boundz): number =>
+  b.topLeft.y - b.bottomRight.y
 
 /*
 3. Compiling.
