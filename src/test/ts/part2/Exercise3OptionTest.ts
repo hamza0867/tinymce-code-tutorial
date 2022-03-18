@@ -12,9 +12,9 @@ describe('Exercise3OptionTest', () => {
   });
 
   it('toPositiveInteger', () => {
-    assert.deepEqual(Ex.toPositiveInteger(2).getOrDie(), 2)
-    assert.isTrue(Ex.toPositiveInteger(0).isNone())
-    assert.isTrue(Ex.toPositiveInteger(-2).isNone())
+    assert.equal(Ex.toPositiveInteger(2).getOrDie(), 2);
+    assert.isTrue(Ex.toPositiveInteger(0).isNone());
+    assert.isTrue(Ex.toPositiveInteger(-2).isNone());
   });
 });
 

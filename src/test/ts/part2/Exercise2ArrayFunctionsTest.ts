@@ -13,7 +13,7 @@ describe('Exercise2ArrayFunctionsTest', () => {
 
   it('frog ages', () => {
     // TODO: write a test for your frog ages function
-    assert.deepEqual(Ex.frogAges(Ex.myFrogs), [3, 4, 1, 10], 'frog names');
+    assert.deepEqual(Ex.frogAges(Ex.myFrogs), [3, 4, 1, 10], 'frog ages');
   });
 
   it('ribbitting frogs', () => {
@@ -30,11 +30,11 @@ describe('Exercise2ArrayFunctionsTest', () => {
   });
 
   it('ribbitting frog exists', () => {
-    assert.deepEqual(Ex.ribbittingFrogExists(Ex.myFrogs), true, 'ribbittingFrogExists');
+    assert.isTrue(Ex.ribbittingFrogExists(Ex.myFrogs), 'ribbittingFrogExists');
   });
 
   it('negative exists', () => {
-    assert.deepEqual(Ex.negativeExists([1, 2, -1]), true, 'negativeExists');
+    assert.isTrue(Ex.negativeExists([1, 2, -1]), 'negativeExists');
   });
 
   it('csvs', () => {
