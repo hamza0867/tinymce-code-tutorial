@@ -1,5 +1,5 @@
-import { describe, it } from '@ephox/bedrock-client';
-import { assert } from 'chai';
+import {describe, it} from '@ephox/bedrock-client';
+import {assert} from 'chai';
 import * as CodeStyle from '../../../main/ts/Part2Ex1';
 
 type Boundz = CodeStyle.Boundz;
@@ -39,10 +39,32 @@ describe('Exercise1CodeStyleTests', () => {
     // ... and then we write some test cases
     // We use chai assertions https://www.chaijs.com/api/assert/
 
-    const b: Boundz = ({ x1: 3, y1: 4, x2: 7, y2: 8 });
+    //const b: Boundz = ({ x1: 3, y1: 4, x2: 7, y2: 8 });
+    const b: Boundz = ({
+      topLeft: {
+        x: 3,
+        y: 8
+      },
+      bottomRight: {
+        x: 7,
+        y: 4
+      }
+    });
     assert.deepEqual(CodeStyle.width(b), 4, 'Width');
 
     // TODO: write another test case for width
+    const other_b: Boundz = ({
+      topLeft: {
+        x: 0,
+        y: 8
+      },
+      bottomRight: {
+        x: 7,
+        y: 0
+      }
+    });
+    assert.deepEqual(CodeStyle.width(other_b), 7, 'Width 2');
+
   });
 
   /*
@@ -53,6 +75,34 @@ describe('Exercise1CodeStyleTests', () => {
 
    */
   // TODO: write a simple test case for height
+
+  it("height", () => {
+
+    const b: Boundz = ({
+      topLeft: {
+        x: 3,
+        y: 8
+      },
+      bottomRight: {
+        x: 7,
+        y: 4
+      }
+    });
+    assert.deepEqual(CodeStyle.height(b), 4, 'Height');
+
+    // TODO: write another test case for width
+    const other_b: Boundz = ({
+      topLeft: {
+        x: 0,
+        y: 8
+      },
+      bottomRight: {
+        x: 7,
+        y: 0
+      }
+    });
+    assert.deepEqual(CodeStyle.height(other_b), 8, 'Height 2');
+  })
 
   /*
   4. Test output
@@ -65,7 +115,7 @@ describe('Exercise1CodeStyleTests', () => {
 
    */
 
-  it.skip('failing test', () => {
-    assert.deepEqual({ a: 1, b: 2 }, { a: 1, b: 7, c: 8 });
+  it('no longer failing test', () => {
+    assert.deepEqual({a: 1, b: 2}, {a: 1, b: 2});
   });
 });

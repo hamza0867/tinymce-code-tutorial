@@ -1,4 +1,4 @@
-import { SugarElement, SugarDocument, Traverse, Insert } from '@ephox/sugar';
+import {SugarElement, SugarDocument, Traverse, Insert} from '@ephox/sugar';
 
 /*
 Sugar
@@ -42,6 +42,7 @@ as the main document.
 TODO: Use SugarElement's fromHtml and fromText functions to create a few elements.
  */
 
+const se4 = SugarElement.fromHtml("<div>empty</div>");
 
 /*
 We often have to traverse from an element to its relatives. The Traverse module has useful functions for this.
@@ -53,8 +54,9 @@ We often have to traverse from an element to its relatives. The Traverse module 
 
   const parent2 = Traverse.parent(kid);
 
-// TODO: inspect the type of Traverse.parent and explain why that type was used.
-// Answer:
+  // TODO: inspect the type of Traverse.parent and explain why that type was used.
+  // Answer: It is an optional as an element does not always have a parent. A root element
+  // for example does not have a parent
 };
 
 
@@ -67,11 +69,15 @@ We often have to traverse from an element to its relatives. The Traverse module 
   Insert.append(parent, kid2);
 
   // TODO: starting at kid1, find kid2
+  const maybeKid2 = Traverse.nextSibling(kid1)
 
   // TODO: starting at kid2, find kid1
+  const maybeKid1 = Traverse.prevSibling(kid2)
 
   // TODO: starting at parent, find both kids
+  const kids = Traverse.children(parent)
 
   // TODO: kid2 grew up - give it its own child node
+  Insert.append(kid2, SugarElement.fromTag('div'))
 };
 

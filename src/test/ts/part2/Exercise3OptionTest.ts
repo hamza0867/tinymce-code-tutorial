@@ -1,5 +1,5 @@
-import { describe, it } from '@ephox/bedrock-client';
-import { assert } from 'chai';
+import {describe, it} from '@ephox/bedrock-client';
+import {assert} from 'chai';
 import * as Ex from '../../../main/ts/Part2Ex3Optional';
 
 describe('Exercise3OptionTest', () => {
@@ -12,7 +12,9 @@ describe('Exercise3OptionTest', () => {
   });
 
   it('toPositiveInteger', () => {
-    // TODO: write a few test cases
+    assert.equal(Ex.toPositiveInteger(2).getOrDie(), 2);
+    assert.isTrue(Ex.toPositiveInteger(0).isNone());
+    assert.isTrue(Ex.toPositiveInteger(-2).isNone());
   });
 });
 
