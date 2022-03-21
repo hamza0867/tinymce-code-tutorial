@@ -1,7 +1,7 @@
-import { UiFinder } from '@ephox/agar';
-import { describe, it } from '@ephox/bedrock-client';
-import { TinyAssertions, TinyDom, TinyHooks } from '@ephox/mcagar';
-import { Editor } from 'tinymce';
+import { UiFinder } from "@ephox/agar";
+import { describe, it } from "@ephox/bedrock-client";
+import { TinyAssertions, TinyDom, TinyHooks } from "@ephox/mcagar";
+import { Editor } from "tinymce";
 
 /*
 In this part we're going to discuss working with the editor in a little more
@@ -9,14 +9,15 @@ detail. We'll look at this under the pretense of writing tests for editor
 functionality, and try to sneak in some knowledge about the editor itself as we
 go.
  */
-describe('Part3Ex1Test', () => {
+describe("Part3Ex1Test", () => {
   /*
   Enter the TinyHooks module, from mcagar (mc - Tiny[MC]E, agar - another
   in-house testing library, more on that later). It lets you write the following.
    */
   const hook = TinyHooks.bddSetup<Editor>({
     // And then you put your settings in here
-    toolbar: 'bold',
+    toolbar: "bold",
+    extended_valid_elements: "span",
   });
   /*
   NOTE: Even though we have assigned the result of our call to TinyHooks to a variable,
@@ -38,7 +39,7 @@ describe('Part3Ex1Test', () => {
   https://github.com/tinymce/tinymce/tree/develop/modules/mcagar/src/main/ts/ephox/mcagar/api/bdd
   */
 
-  it('looks like an editor', () => {
+  it("looks like an editor", () => {
     // it is safe to access the hook inside an "it" block.
     const editor = hook.editor();
     // Now what?
@@ -56,10 +57,10 @@ describe('Part3Ex1Test', () => {
     UiFinder.exists(container, 'button[title="Bold"]');
   });
 
-  it('has content like an editor', () => {
+  it("has content like an editor", () => {
     const editor = hook.editor();
 
-    editor.setContent(/* TODO */ "<p>Hello world</p>");
+    editor.setContent("<p>Hello world</p><p>Hi<span>Span</span></p>");
 
     /*
     Another useful module from mcagar, TinyAssertions is full of ways to make
@@ -72,7 +73,7 @@ describe('Part3Ex1Test', () => {
      */
     TinyAssertions.assertContentPresence(editor, {
       p: 2,
-      span: 1
+      span: 1,
     });
   });
 });
